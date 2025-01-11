@@ -18,7 +18,15 @@ func main() {
 	// Public routes
 	router.POST("/register", handlers.Register)
 	router.POST("/login", handlers.Login)
+	router.POST("/saveNote", handlers.SaveNote)
+
 	router.GET("/poetry", handlers.GetPoetry)
+
+	router.GET("/delNote/:id", handlers.DelNote)
+
+	router.GET("/notes", handlers.GetNotes)
+
+	router.GET("/getUserNotes/:username", handlers.GetNoteByUsername)
 
 	// Protected routes
 	authGroup := router.Group("/api")
@@ -28,10 +36,7 @@ func main() {
 			username := c.MustGet("username").(string)
 			c.JSON(http.StatusOK, gin.H{"message": "Welcome, " + username})
 		})
-
 	}
-
-	// Start the server
 	if err := router.Run(":8080"); err != nil {
 		panic(err)
 	}
