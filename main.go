@@ -18,6 +18,7 @@ func main() {
 	// Public routes
 	router.POST("/register", handlers.Register)
 	router.POST("/login", handlers.Login)
+	router.GET("/poetry", handlers.GetPoetry)
 
 	// Protected routes
 	authGroup := router.Group("/api")
