@@ -66,14 +66,13 @@ func GetFavorites(c *gin.Context) {
 		return
 	}
 
-	var poems []models.APIResponse
+	poems := make([]models.APIResponse, 0)
 
 	for _, poemID := range poemIDs {
 		// 根据 poemIDs 查询古诗详情
 		poem, _ := database.FetchFromDB(poemID)
 		poems = append(poems, *poem)
 	}
-
 	c.JSON(http.StatusOK, poems)
 }
 
@@ -88,6 +87,7 @@ func GetFavoritesList(c *gin.Context) {
 		ErrorResponse(c, http.StatusInternalServerError, "获取收藏列表失败")
 		return
 	}
+	poemIDs = append(poemIDs, "0")
 	SuccessResponse(c, http.StatusOK, "获取收藏列表成功", poemIDs)
 
 }
