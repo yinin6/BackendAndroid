@@ -71,7 +71,8 @@ func SaveToDB(db *sql.DB, apiResponse *models.APIResponse) error {
 	return nil
 }
 
-func FetchFromDB(db *sql.DB, id string) (*models.APIResponse, error) {
+func FetchFromDB(id string) (*models.APIResponse, error) {
+	db := DB
 	// 查询主表数据
 	var data models.Data
 	var token, ipAddress string

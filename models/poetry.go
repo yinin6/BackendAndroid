@@ -24,3 +24,9 @@ type Origin struct {
 	Content   []string `json:"content"`
 	Translate []string `json:"translate"`
 }
+
+type UserFavorite struct {
+	UserID    string `json:"user_id" db:"user_id"`       // 用户ID
+	PoemID    string `json:"poem_id" db:"poem_id"`       // 古诗ID
+	CreatedAt string `json:"created_at" db:"created_at"` // 收藏时间
+}

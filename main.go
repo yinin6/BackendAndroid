@@ -18,14 +18,16 @@ func main() {
 	// Public routes
 	router.POST("/register", handlers.Register)
 	router.POST("/login", handlers.Login)
-	router.POST("/saveNote", handlers.SaveNote)
 
 	router.GET("/poetry", handlers.GetPoetry)
+	router.GET("/poetryList/:n", handlers.GetPoetryList)
+	router.POST("/addFavorites", handlers.AddFavorite)
+	router.POST("/removeFavorites", handlers.RemoveFavorites)
+	router.GET("/getFavoritesList/:username", handlers.GetFavoritesList)
 
+	router.POST("/saveNote", handlers.SaveNote)
 	router.GET("/delNote/:id", handlers.DelNote)
-
 	router.GET("/notes", handlers.GetNotes)
-
 	router.GET("/getUserNotes/:username", handlers.GetNoteByUsername)
 
 	// Protected routes

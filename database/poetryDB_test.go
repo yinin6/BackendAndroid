@@ -10,7 +10,7 @@ func TestGetPoetry(t *testing.T) {
 
 	InitDB()
 	ID := "5b8b9572e116fb3714e6faba"
-	fetchedResponse, err := FetchFromDB(DB, ID)
+	fetchedResponse, err := FetchFromDB(ID)
 	if err != nil {
 		log.Fatal(err)
 	}
