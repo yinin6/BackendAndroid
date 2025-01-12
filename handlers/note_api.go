@@ -12,7 +12,7 @@ import (
 func SaveNote(c *gin.Context) {
 	var note models.Note
 	if err := c.ShouldBindJSON(&note); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ErrorResponse(c, http.StatusBadRequest, "invalid note")
 		return
 	}
 
@@ -29,13 +29,13 @@ func DelNote(c *gin.Context) {
 	idStr := c.Param("id")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid id"})
+		ErrorResponse(c, http.StatusBadRequest, "invalid id")
 		return
 	}
 
 	err = database.DeleteNoteByID(id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		ErrorResponse(c, http.StatusInternalServerError, "failed to delete note")
 		return
 	}
 

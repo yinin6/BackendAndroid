@@ -14,7 +14,6 @@ func GetPoetry(c *gin.Context) {
 		log.Fatal(err)
 	}
 	c.JSON(http.StatusOK, fetchedResponse[0])
-
 }
 
 func GetPoetryList(c *gin.Context) {

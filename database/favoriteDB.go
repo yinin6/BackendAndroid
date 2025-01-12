@@ -14,7 +14,7 @@ func AddToFavorites(userID, poemID string) error {
 func RemoveFromFavorites(userID, poemID string) error {
 	query := `
 		DELETE FROM favorites
-		WHERE user_id = $1 AND poem_id = $2;`
+		WHERE user_id = ? AND poem_id = ?;`
 	_, err := DB.Exec(query, userID, poemID)
 	return err
 }

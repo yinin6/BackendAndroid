@@ -35,26 +35,32 @@ func RemoveFavorites(c *gin.Context) {
 		UserID string `json:"user_id"`
 		PoemID string `json:"poem_id"`
 	}
+
 	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": "无效的请求"})
+		ErrorResponse(c, http.StatusBadRequest, "无效的请求")
+
 		return
 	}
+
+	log.Println(request)
 
 	// 从数据库或缓存中移除收藏关系
 	err := database.RemoveFromFavorites(request.UserID, request.PoemID)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "取消收藏失败"})
+		ErrorResponse(c, http.StatusInternalServerError, "取消收藏失败")
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "success", "message": "古诗已取消收藏"})
+	SuccessResponse(c, http.StatusOK, "古诗已取消收藏", nil)
 }
 
 func GetFavorites(c *gin.Context) {
-	userID := c.Query("username")
+	userID := c.Param("username")
 
 	// 从数据库或缓存中获取用户的收藏列表
 	poemIDs, err := database.GetUserFavorites(userID)
+
+	log.Println(poemIDs, userID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "获取收藏列表失败"})
 		return
@@ -68,10 +74,7 @@ func GetFavorites(c *gin.Context) {
 		poems = append(poems, *poem)
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"status": "success",
-		"data":   poems,
-	})
+	c.JSON(http.StatusOK, poems)
 }
 
 func GetFavoritesList(c *gin.Context) {

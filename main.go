@@ -23,6 +23,7 @@ func main() {
 	router.GET("/poetryList/:n", handlers.GetPoetryList)
 	router.POST("/addFavorites", handlers.AddFavorite)
 	router.POST("/removeFavorites", handlers.RemoveFavorites)
+	router.GET("/getFavorites/:username", handlers.GetFavorites)
 	router.GET("/getFavoritesList/:username", handlers.GetFavoritesList)
 
 	router.POST("/saveNote", handlers.SaveNote)

@@ -4,14 +4,21 @@ import (
 	"BackendAndroid/models"
 	"database/sql"
 	"fmt"
+	"log"
 )
 
 func SaveNote(db *sql.DB, note models.Note) error {
 	query := `
-		INSERT INTO notes (title, content, image_base64, username)
-		VALUES (?, ?, ?, ?)
+		INSERT INTO notes (id, title, content, image_base64, username)
+		VALUES (?, ?, ?, ?, ?)
+		ON DUPLICATE KEY UPDATE
+			title = VALUES(title),
+			content = VALUES(content),
+			image_base64 = VALUES(image_base64),
+			username = VALUES(username)
 	`
-	_, err := db.Exec(query, note.Title, note.Content, note.ImageBase64, note.Username)
+	log.Println(note.Id, note.Title)
+	_, err := db.Exec(query, note.Id, note.Title, note.Content, note.ImageBase64, note.Username)
 	if err != nil {
 		return fmt.Errorf("failed to save note: %v", err)
 	}
